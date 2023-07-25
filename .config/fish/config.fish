@@ -1,3 +1,4 @@
+eval "$(/opt/homebrew/bin/brew shellenv)"
 alias colorscript="~/TerminalApplications/shell-color-scripts/colorscript.sh"
 alias randomColorscript="colorscript random"
 
@@ -10,7 +11,7 @@ alias g='git'
 alias pr="~/bin/pr-maker"
 alias project-setup="~/TerminalApplications/ProjectCreator"
 alias config="cd ~/.config && clear && ls"
-alias dotfiles='/usr/bin/git --git-dir=$HOME --work-tree=$HOME'
+alias dotfiles='/usr/bin/git --git-dir=$HOME/dotfiles --work-tree=$HOME'
 alias dotfilesNoTrack='dotfiles config --local status.showUntrackedFiles no'
 
 alias weather-full='curl wttr.in' # print weather for current location (https://github.com/chubin/wttr.in)
@@ -67,19 +68,8 @@ function notification --argument-names title notification
 end
 
 ## Design aliasses
-
 alias design='cd ~/Documents/Design/ && clear'
 alias personal-design='cd ~/Documents/Design/Personal/ && clear'
-
-## Project aliasses
-
-alias repos='cd ~/Documents/Repositories/ && clear && ls'
-alias eagenda='cd ~/Documents/Repositories/eagenda/e-agenda-frontend/ && clear'
-alias ppi='cd ~/Documents/Repositories/PPI/ && clear'
-alias fsma='cd ~/Documents/Repositories/FSMA/codebase/fsma && clear'
-alias wikifin='cd ~/Documents/Repositories/FSMA/codebase/wikifin && clear'
-alias pyur='cd ~/Documents/Repositories/pÿur/backend && nvm use v12 && java8 && clear && alias delete-modules="fd -gHI -t d -d 2 'node_modules' ./frontend -X rm -rf"'
-alias mothership='cd ~/Documents/Repositories/Mothership && clear'
 
 ## Adobe Suite
 alias psd='open -a /Applications/Adobe\ Photoshop\ 2020/Adobe\ Photoshop\ 2020.app'
@@ -89,53 +79,122 @@ alias ind='open -a /Applications/Adobe\ InDesign\ 2020/Adobe\ InDesign\ 2020.app
 
 ## Regular programs
 alias safari='open -a safari'
-alias idea='open -a "IntelliJ IDEA.app"'
-
 
 ## Kittens
 alias img='kitty +kitten icat'
 
-set -x JAVA_8_HOME /Library/Java/JavaVirtualMachines/jdk1.8.0_211.jdk/Contents/Home
-set -x JAVA_11_HOME /Library/Java/JavaVirtualMachines/jdk-11.0.6.jdk/Contents/Home
-set -x JAVA_OPEN11_HOME /Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
-set -x JAVA_15_HOME /Library/Java/JavaVirtualMachines/jdk-15.0.1.jdk/Contents/Home
-set -x JAVA_OPENLATEST_HOME /Library/Java/JavaVirtualMachines/openjdk.jdk/Contents/Home
-
-function java8
-  set -g -x JAVA_HOME $JAVA_8_HOME
+## Sligro Alliasses
+function goToAEMProvisioning
+  pushd /Users/$USER/Code/Acolad/Sligro/aem-provisioning
+  eval $argv
+  popd
 end
 
-function java11
-  set -g -x JAVA_HOME $JAVA_11_HOME
+function vm-status
+ goToAEMProvisioning ./vm/scripts/vm-status.sh 
+end
+function vm-prepare
+  goToAEMProvisioning ./vm/scripts/vm-prepare.sh $argv
+end
+function vm-launch
+  goToAEMProvisioning ./vm/scripts/vm-launch.sh $argv
+end
+function vm-ssh
+  goToAEMProvisioning ./vm/scripts/vm-ssh.sh $argv
+end
+function vm-provision
+  goToAEMProvisioning ./vm/scripts/vm-provision.sh $argv
+end
+function vm-shutdown
+  goToAEMProvisioning ./vm/scripts/vm-shutdown.sh $argv
+end
+function vm-destroy
+  goToAEMProvisioning ./vm/scripts/vm-destroy.sh $argv
 end
 
-function javaOpen11
-  set -g -x JAVA_HOME $JAVA_OPEN11_HOME
+function start-dev-env
+  pushd /Users/nicovandenhove/Code/Acolad/Sligro/dev
+  docker-compose up -d
+  popd
 end
 
-function java15
-  set -g -x JAVA_HOME $JAVA_15_HOME
+function stop-dev-env
+  if test (docker ps | grep -c aem-sligro) > 0
+    pushd /Users/nicovandenhove/Code/Acolad/Sligro/dev
+    docker-compose down
+    popd
+  end
 end
 
-function javaOpenLatest
-  set -g -x JAVA_HOME $JAVA_OPENLATEST_HOME
+function sligro-dev-env
+  if test (docker ps | grep -c aem-sligro) = 0
+    start-dev-env
+  end
+  docker exec -it aem-sligro zsh
 end
 
-# default to Java 11
-java11
+function start-api-services
+  docker exec -t aem-sligro zsh -c "cd api-services && ./runall.sh"
+end
+
+function start-bff
+  docker exec -t aem-sligro zsh -c "cd webshop-bff && ./runall.sh"
+end
+
+function sligro-dev
+  cd /Users/nicovandenhove/Code/Acolad/Sligro ;; volta install node@16 ;; sdk u java 8.0.352-librca ;; sdk u maven 3.8.7
+end
+
+function merge-env
+  ~/TerminalApplications/merge-env.sh $argv
+end
+
+function merge-env-in-folder
+  eval $argv[2..-1]
+  merge-env .env.base .env.$argv[1]
+end
+
+function set-environment
+  set -l environment (string lower $argv[1])
+  merge-env-in-folder $environment (cd assortmentmodule)
+  merge-env-in-folder $environment (cd ../cart)
+  
+# merge-env-in-folder $environment (cd ../contentsearch)
+  merge-env-in-folder $environment (cd ../list)
+  merge-env-in-folder $environment (cd ../order)
+  merge-env-in-folder $environment (cd ../product)
+  merge-env-in-folder $environment (cd ../productoverview)
+  merge-env-in-folder $environment (cd ../user)
+end
+
+function swap-api-env
+  pushd /Users/nicovandenhove/Code/Acolad/Sligro/api-services/packages
+  switch $argv[1]
+    case tst
+      set-environment $argv[1]
+    case acc
+      set-environment $argv[1]
+    case prd
+      set-environment $argv[1]
+    case local
+      set-environment $argv[1]
+    case '*'
+      echo No shuch environment as: $argv[1]
+  end
+  popd
+end
 
 set -g -x fish_greeting ''
+set --export --prepend PATH "/usr/local/bin"
 
 fish_vi_key_bindings
 
 randomColorscript
 
-function nvm
-  bass source ~/.nvm/nvm.sh --no-use ';' nvm $argv
-end
-
-[ -f /usr/local/share/autojump/autojump.fish ]; and source /usr/local/share/autojump/autojump.fish
+[ -f $(brew --prefix)/share/autojump/autojump.fish ]; and source $(brew --prefix)/share/autojump/autojump.fish
 
 starship init fish | source
-set -gx VOLTA_HOME "$HOME/.volta"
-set -gx PATH "$VOLTA_HOME/bin" $PATH
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+set --export --prepend PATH "/Users/nicovandenhove/.rd/bin"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
