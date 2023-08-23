@@ -112,78 +112,6 @@ function vm-destroy
   goToAEMProvisioning ./vm/scripts/vm-destroy.sh $argv
 end
 
-function start-dev-env
-  pushd /Users/nicovandenhove/Code/Acolad/Sligro/dev
-  docker-compose up -d
-  popd
-end
-
-function stop-dev-env
-  if test (docker ps | grep -c aem-sligro) > 0
-    pushd /Users/nicovandenhove/Code/Acolad/Sligro/dev
-    docker-compose down
-    popd
-  end
-end
-
-function sligro-dev-env
-  if test (docker ps | grep -c aem-sligro) = 0
-    start-dev-env
-  end
-  docker exec -it aem-sligro zsh
-end
-
-function start-api-services
-  docker exec -t aem-sligro zsh -c "cd api-services && ./runall.sh"
-end
-
-function start-bff
-  docker exec -t aem-sligro zsh -c "cd webshop-bff && ./runall.sh"
-end
-
-function sligro-dev
-  cd /Users/nicovandenhove/Code/Acolad/Sligro ;; volta install node@16 ;; sdk u java 8.0.352-librca ;; sdk u maven 3.8.7
-end
-
-function merge-env
-  ~/TerminalApplications/merge-env.sh $argv
-end
-
-function merge-env-in-folder
-  eval $argv[2..-1]
-  merge-env .env.base .env.$argv[1]
-end
-
-function set-environment
-  set -l environment (string lower $argv[1])
-  merge-env-in-folder $environment (cd assortmentmodule)
-  merge-env-in-folder $environment (cd ../cart)
-  
-# merge-env-in-folder $environment (cd ../contentsearch)
-  merge-env-in-folder $environment (cd ../list)
-  merge-env-in-folder $environment (cd ../order)
-  merge-env-in-folder $environment (cd ../product)
-  merge-env-in-folder $environment (cd ../productoverview)
-  merge-env-in-folder $environment (cd ../user)
-end
-
-function swap-api-env
-  pushd /Users/nicovandenhove/Code/Acolad/Sligro/api-services/packages
-  switch $argv[1]
-    case tst
-      set-environment $argv[1]
-    case acc
-      set-environment $argv[1]
-    case prd
-      set-environment $argv[1]
-    case local
-      set-environment $argv[1]
-    case '*'
-      echo No shuch environment as: $argv[1]
-  end
-  popd
-end
-
 set -g -x fish_greeting ''
 set --export --prepend PATH "/usr/local/bin"
 
@@ -194,6 +122,8 @@ randomColorscript
 [ -f $(brew --prefix)/share/autojump/autojump.fish ]; and source $(brew --prefix)/share/autojump/autojump.fish
 
 starship init fish | source
+
+set --export --prepend PATH "/Users/nicovandenhove/.composer/vendor/bin"
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 set --export --prepend PATH "/Users/nicovandenhove/.rd/bin"

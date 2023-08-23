@@ -4,6 +4,7 @@
   "auto-session": { "branch": "main", "commit": "21033c6815f249a7839c3a85fc8a6b44d74925c9" },
   "catppuccin": { "branch": "main", "commit": "57b421ee5f7380f816791fa451e86f213b625ece" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "0e6b2ed705ddcff9738ec4ea838141654f12eeef" },
+  "gitsigns.nvim": { "branch": "main", "commit": "31178496552584e84fa9e74e087dec1f6c347f5d" },
   "lazy.nvim": { "branch": "main", "commit": "652b6febf8d5c99eb8cf4a1cec63da6db62e77d2" },
   "lsp-zero.nvim": { "branch": "v2.x", "commit": "7c7977cbcff64f8b057bcba0d15ea17e75bf90d2" },
   "lualine.nvim": { "branch": "master", "commit": "05d78e9fd0cdfb4545974a5aa14b1be95a86e9c9" },
@@ -20,5 +21,6 @@
   "telescope.nvim": { "branch": "master", "commit": "c1a2af0af69e80e14e6b226d3957a064cd080805" },
   "transparent.nvim": { "branch": "main", "commit": "f09966923f7e329ceda9d90fe0b7e8042b6bdf31" },
   "undotree": { "branch": "master", "commit": "485f01efde4e22cb1ce547b9e8c9238f36566f21" },
+  "vim-fugitive": { "branch": "master", "commit": "b3b838d690f315a503ec4af8c634bdff3b200aaf" },
   "which-key.nvim": { "branch": "main", "commit": "015fdf3e3e052d4a9fee997ca0aa387c2dd3731c" }
 }
