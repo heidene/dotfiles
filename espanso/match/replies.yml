@@ -7,29 +7,19 @@ matches:
   - trigger: ";lmk"
     replace: "Let me know"
   - trigger: ";nic"
-    replace: " -- Nicole"
+    replace: " -- Nico"
   - trigger: ";questions"
     replace: "Let me know if you have any questions!"
 
-  # Answers to FAQs
-  - trigger: ";faq.theme"
-    replace: "I always name the theme (and plugins) I've used in the first pinned comment under a video. That way I don't have to scrub through every video when people ask, heh!"
-
   # Thanks
-  - trigger: ";ty.watch"
-    replace: "Thanks for watching!"
   - trigger: ";ty.app"
     replace: "I really appreciate it!"
-  - trigger: ";ty.support"
-    replace: "Thanks for the support!"
   - trigger: ";tysm"
     replace: "Thank you so much! I really appreciate it."
   - trigger: ";ty.sweet"
     replace: "That's sweet of you to say. Thank you!"
   - trigger: ";ty.feed"
     replace: "Thanks for the feedback! I'm always trying to improve, so I'll keep that in mind for next time."
-  - trigger: ";ty.videos"
-    replace: "I'm happy you like my videos!"
   - trigger: ";ty.happy"
     replace: "Happy to hear that!"
   - trigger: ";ty.glad"
@@ -54,8 +44,6 @@ matches:
     replace: "I'm sorry you feel that way."
 
   # No
-  - trigger: ";no.community"
-    replace: "It sounds like there's more going on here that might need further troubleshooting. Since I'm not able to do that here, maybe you could head over to either the Obsidian community forum or the Obsidian Discord server with a detailed description of the issues you're facing. Here's the link: https://obsidian.md/community . Good luck!"
   - trigger: ";no.consult"
     replace: |
               I don't offer consulting services, unfortunately. I work full-time and Obsidian is a part-time passion project, so can't really start new projects right now. However, I can recommend two people who *do* offer consulting that I can recommend as good members of the community:
@@ -73,7 +61,7 @@ matches:
 
 
               Thanks,
-              Nicole
+              Nico
   - trigger: ";no.ads"
     replace: |
               Hi there,
@@ -82,7 +70,7 @@ matches:
 
 
               Cheers,
-              Nicole
+              Nico
   - regex: ";no.tool\\((?P<product>.*)\\)"
     replace: |
               Hi there,
@@ -106,4 +94,4 @@ matches:
 
 
               Cheers,
-              Nicole
+              Nico

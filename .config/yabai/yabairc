@@ -19,7 +19,6 @@ yabai -m config mouse_action1 move
 # set modifier + right-click drag to resize window
 yabai -m config mouse_action2 resize
 
-
 # when window is dropped in center of another window, swap them (on edges it will split it)
 yabai -m mouse_drop_action swap
 
@@ -30,3 +29,5 @@ yabai -m rule --add app="^MyWallpaper$" manage=off
 yabai -m rule --add app="^Music$" manage=off
 yabai -m rule --add app="^Tape$" manage=off
 yabai -m rule --add app="^task-pal$" manage=off
+yabai -m rule --add app="^CleanShot X$" manage=off
+yabai -m rule --add app="^Finder$" manage=off grid=6:6:1:1:4:4

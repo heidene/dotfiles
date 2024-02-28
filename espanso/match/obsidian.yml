@@ -16,8 +16,6 @@ matches:
               requires: 
               source:
               ---
-  - trigger: ";k6logo.e"
-    replace: "![[k6 logo - small.png|15]]🎞️ "
   - trigger: ";leaf"
     replace: |
               ```leaflet
