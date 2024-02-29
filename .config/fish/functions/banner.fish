@@ -4,4 +4,3 @@ alias randomColorscript="colorscript random"
 function banner
   pokemon-colorscripts -r --no-title
 end
-
